@@ -1,15 +1,15 @@
-import React from 'react';
-
-import { range } from '../../utils';
+import React from "react";
 
 function Guess({ value }) {
   return (
     <p className="guess">
-      {range(5).map((num) => (
-        <span key={num} className="cell">
-          {value ? value[num] : undefined}
-        </span>
-      ))}
+      {Array(5)
+        .fill()
+        .map((_, index) => (
+          <span key={index} className="cell">
+            {value ? value[index] : undefined}
+          </span>
+        ))}
     </p>
   );
 }

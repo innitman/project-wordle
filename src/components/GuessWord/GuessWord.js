@@ -1,12 +1,15 @@
 import React from "react";
+import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
-function GuessWord({ attempt, setAttempt }) {
+function GuessWord({ previousAttempts, setPreviousAttempts }) {
+  const [attempt, setAttempt] = React.useState("");
   return (
     <>
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          console.log(attempt);
+          const nextAttempts = [...previousAttempts, attempt];
+          setPreviousAttempts(nextAttempts);
           setAttempt("");
         }}
         className="guess-input-wrapper"
@@ -19,7 +22,13 @@ function GuessWord({ attempt, setAttempt }) {
           value={attempt}
           pattern="^[A-Za-z]{5}$"
           title="5 letter word"
-          onChange={(event) => setAttempt(event.target.value.toUpperCase())}
+          onChange={(event) => {
+            if (previousAttempts.length < NUM_OF_GUESSES_ALLOWED) {
+              setAttempt(event.target.value.toUpperCase());
+            } else {
+              window.alert("6 guesses done");
+            }
+          }}
         />
       </form>
     </>
